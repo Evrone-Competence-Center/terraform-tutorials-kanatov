@@ -1,0 +1,37 @@
+name: Push to feature branch
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
+env:
+  TF_LOG: INFO
+  TF_INPUT: false
+
+jobs: 
+  check-code:
+    runs-on: ubuntu-latest
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    # Set the working directory to vnet for the config files
+    defaults:
+        run:
+          shell: bash
+          working-directory: ./vnet
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v3å
+      - name: Create IAM token
+        id: generation-iam-token
+        uses: bigtows/yc-token@latest
+        with:
+          service-account-token: ${{ secrets.SERVICE_ACCOUNT_TOKEN }}
+          type-token: iam
+      - name: Test
+        run: echo ${{ steps.generation-iam-token.outputs.iam-token }}
+      # - name: Setup Terraform
+      #   uses: hashicorp/setup-terraform@v2
+      #   with:
+      #     terraform_version: ${{ secrets.TERRAFORM_VERSION }}
