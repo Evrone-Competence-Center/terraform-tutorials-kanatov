@@ -45,4 +45,9 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
+        env:
+          TF_VAR_yc_token: ${{ steps.generation-iam-token.outputs.iam-token }}
+          TF_VAR_cloud_id: ${{ secrets.YC_CLOUD_ID}}
+          TF_VAR_folder_id: ${{ secrets.YC_FOLDER_ID}}
         run: terraform plan -no-color
+        
