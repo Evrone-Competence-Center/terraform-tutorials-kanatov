@@ -22,3 +22,13 @@ variable "vms_cores" {
   type    = number
   default = 2
 }
+
+variable "s3_access_key" {
+  type        = string
+  description = "Access key for Object Storage in YC"
+}
+
+variable "s3_secret_key" {
+  type        = string
+  description = "Secret key for Object Storage in YC"
+}
