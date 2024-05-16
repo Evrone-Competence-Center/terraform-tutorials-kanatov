@@ -12,3 +12,13 @@ variable "folder_id" {
   type        = string
   description = "Folder ID for YC"
 }
+
+variable "vms_mem" {
+  type    = number
+  default = 4
+}
+
+variable "vms_cores" {
+  type    = number
+  default = 2
+}
