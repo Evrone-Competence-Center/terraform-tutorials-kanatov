@@ -6,11 +6,9 @@ terraform {
   }
   required_version = ">= 0.13"
   backend "s3" {
-    bucket     = "tf-s3bucket-1"
-    key        = "terraform.tfstate"
-    region     = "ru-central1-a"
-    access_key = var.s3_access_key
-    secret_key = var.s3_secret_key
+    bucket = "tf-s3bucket-1"
+    key    = "terraform.tfstate"
+    region = "ru-central1-a"
   }
 }
 
