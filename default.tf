@@ -10,7 +10,7 @@ terraform {
       s3 = "https://storage.yandexcloud.net"
     }
     bucket = "tf-s3bucket-1"
-    region = "eu-south-1"
+    region = "ru-central1"
     key    = "terraform.tfstate"
 
     skip_region_validation      = true
