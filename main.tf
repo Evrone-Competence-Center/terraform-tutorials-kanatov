@@ -53,7 +53,7 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/DiV+iEpistN9+bF+2nXq7RWf0b4PyzaBwhmAJC7IW8TzwQiC5YWT/UG60S6mDLdsV3wcXFq+BaeJeO9TCST4WNsT2l8un0Gs1Cm2p7e9kRxk9XFDpoathV89ecfHUIQvDDpz3OSAWhWmnItQ7tu98E2YBZn6agZPMva55j8x8GPUyjzT874JhpwgKcCFetqoycNJyc85m/Yk0MzCtoOK7igvrnLXQWuz01p7nQ3IZnDttDM0yNpoI7HVCnLWF3iJB2OnUc9mZur5wpagTDrdxXAeawMUG5nK6krzoM0MkqRBE6xFsAOyrQESlQxPnNHisi7dV7bRlblGQn2Ir5kddLSfKBTtSD7efWVkuqV2hKX1/LsSunDoTw+7bcnxNliRvKZO++Dw9n4wAFusiC+7QlTFl2WddPemW8T9GflNYoIzgP8a351PHbjjt0A+5DYpV4tcaC6e5id3SiXKmBc6LTp99x4rbBz/puDh0BZdHjcv6Gr3khvGESPIUFn/t1s= vlad@Mac-mini-Admin.local"
   }
 }
 
