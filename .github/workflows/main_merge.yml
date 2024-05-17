@@ -11,6 +11,7 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
+  TF_VAR_vms_mem: 4
 
 jobs: 
   check-code:

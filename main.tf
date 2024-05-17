@@ -34,9 +34,14 @@ resource "yandex_compute_disk" "boot_disk" {
 }
 
 resource "yandex_compute_instance" "vm-1" {
-  name        = "test"
-  platform_id = var.vms_platform_id
-  zone        = "ru-central1-a"
+  name                      = "test"
+  platform_id               = var.vms_platform_id
+  zone                      = "ru-central1-a"
+  allow_stopping_for_update = true
+
+  scheduling_policy {
+    preemptible = true
+  }
 
   resources {
     cores  = var.vms_cores
