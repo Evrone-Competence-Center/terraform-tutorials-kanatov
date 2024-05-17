@@ -28,3 +28,8 @@ variable "vms_cores" {
   type    = number
   default = 2
 }
+
+variable "vms_image_id" {
+  type    = string
+  default = "fd8ejsdle3sqfpsgmqeh"
+}

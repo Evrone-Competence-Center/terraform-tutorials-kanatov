@@ -30,7 +30,7 @@ resource "yandex_compute_disk" "boot_disk" {
   type     = "network-ssd"
   zone     = "ru-central1-a"
   size     = "30"
-  image_id = "fd8ejsdle3sqfpsgmqeh"
+  image_id = var.vms_image_id
 }
 
 resource "yandex_compute_instance" "vm-1" {
