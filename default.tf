@@ -4,13 +4,22 @@ terraform {
       source = "yandex-cloud/yandex"
     }
   }
-  required_version = ">= 0.13"
-}
 
-# locals {
-#   cloud_id = "b1g1f73gcm5vet9spf42"
-#   folder_id = "b1gds5v86pf14bpd23vd"
-# }
+  backend "s3" {
+    endpoints = {
+      s3 = "https://storage.yandexcloud.net"
+    }
+    bucket = "tf-s3bucket-1"
+    region = "ru-central1"
+    key    = "terraform.tfstate"
+
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    skip_requesting_account_id  = true # Необходимая опция Terraform для версии 1.6.1 и старше.
+    skip_s3_checksum            = true # Необходимая опция при описании бэкенда для Terraform версии 1.6.3 и старше.
+
+  }
+}
 
 provider "yandex" {
   zone      = "ru-central1-a"
@@ -18,4 +27,5 @@ provider "yandex" {
   folder_id = var.folder_id
   #   service_account_key_file = "authorized_key.json"
   token = var.yc_token
+
 }
