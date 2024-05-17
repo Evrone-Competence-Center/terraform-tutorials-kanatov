@@ -21,7 +21,7 @@ variable "vms_platform_id" {
 
 variable "vms_mem" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "vms_cores" {
