@@ -26,5 +26,5 @@ variable "vms_mem" {
 
 variable "vms_cores" {
   type    = number
-  default = 1
+  default = 2
 }
