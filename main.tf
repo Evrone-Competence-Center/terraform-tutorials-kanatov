@@ -24,37 +24,46 @@ resource "yandex_storage_bucket" "s3bucket-1" {
   bucket     = "tf-s3bucket-2"
 }
 
-# resource "yandex_compute_instance" "vm-1" {
-#   name        = "test"
-#   platform_id = "standard-v1"
-#   zone        = "ru-central1-a"
 
-#   resources {
-#     cores  = var.vms_cores
-#     memory = var.vms_mem
-#   }
+resource "yandex_compute_disk" "boot-disk" {
+  name     = "main-disk"
+  type     = "network-ssd"
+  zone     = "ru-central1-a"
+  size     = "30"
+  image_id = "fd8ejsdle3sqfpsgmqeh"
+}
 
-#   boot_disk {
-#     initialize_params {
-#       image_id = "fd8ejsdle3sqfpsgmqeh"
-#     }
-#   }
+resource "yandex_compute_instance" "vm-1" {
+  name        = "test"
+  platform_id = var.vms_platform_id
+  zone        = "ru-central1-a"
 
-#   network_interface {
-#     index     = 1
-#     subnet_id = yandex_vpc_subnet.foo.id
-#   }
+  resources {
+    cores  = var.vms_cores
+    memory = var.vms_mem
+  }
 
-#   metadata = {
-#     foo      = "bar"
-#     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-#   }
-# }
+  boot_disk {
+    disk_id = yandex_compute_disk.boot_disk.id
+  }
 
-# resource "yandex_vpc_network" "foo" {}
+  network_interface {
+    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+    nat       = true
+  }
 
-# resource "yandex_vpc_subnet" "foo" {
-#   zone           = "ru-central1-a"
-#   network_id     = yandex_vpc_network.foo.id
-#   v4_cidr_blocks = ["10.5.0.0/24"]
-# }
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
+}
+
+resource "yandex_vpc_network" "network-1" {
+  name = "network1"
+}
+
+resource "yandex_vpc_subnet" "subnet-1" {
+  name           = "subnet1"
+  zone           = "<зона_доступности>"
+  v4_cidr_blocks = ["192.168.10.0/24"]
+  network_id     = "${yandex_vpc_network.network-1.id}"
+}
