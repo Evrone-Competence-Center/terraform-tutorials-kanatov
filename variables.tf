@@ -13,12 +13,18 @@ variable "folder_id" {
   description = "Folder ID for YC"
 }
 
+variable "vms_platform_id" {
+  type        = string
+  default     = "standard-v1"
+  description = "Platform ID for VM in YC"
+}
+
 variable "vms_mem" {
   type    = number
-  default = 4
+  default = 1
 }
 
 variable "vms_cores" {
   type    = number
-  default = 2
+  default = 1
 }

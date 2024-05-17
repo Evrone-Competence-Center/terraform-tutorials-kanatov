@@ -24,37 +24,46 @@ resource "yandex_storage_bucket" "s3bucket-1" {
   bucket     = "tf-s3bucket-2"
 }
 
-# resource "yandex_compute_instance" "vm-1" {
-#   name        = "test"
-#   platform_id = "standard-v1"
-#   zone        = "ru-central1-a"
 
-#   resources {
-#     cores  = var.vms_cores
-#     memory = var.vms_mem
-#   }
+resource "yandex_compute_disk" "boot_disk" {
+  name     = "main-disk"
+  type     = "network-ssd"
+  zone     = "ru-central1-a"
+  size     = "30"
+  image_id = "fd8ejsdle3sqfpsgmqeh"
+}
 
-#   boot_disk {
-#     initialize_params {
-#       image_id = "fd8ejsdle3sqfpsgmqeh"
-#     }
-#   }
+resource "yandex_compute_instance" "vm-1" {
+  name        = "test"
+  platform_id = var.vms_platform_id
+  zone        = "ru-central1-a"
 
-#   network_interface {
-#     index     = 1
-#     subnet_id = yandex_vpc_subnet.foo.id
-#   }
+  resources {
+    cores  = var.vms_cores
+    memory = var.vms_mem
+  }
 
-#   metadata = {
-#     foo      = "bar"
-#     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-#   }
-# }
+  boot_disk {
+    disk_id = yandex_compute_disk.boot_disk.id
+  }
 
-# resource "yandex_vpc_network" "foo" {}
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-1.id
+    nat       = true
+  }
 
-# resource "yandex_vpc_subnet" "foo" {
-#   zone           = "ru-central1-a"
-#   network_id     = yandex_vpc_network.foo.id
-#   v4_cidr_blocks = ["10.5.0.0/24"]
-# }
+  metadata = {
+    ssh-keys = "ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/DiV+iEpistN9+bF+2nXq7RWf0b4PyzaBwhmAJC7IW8TzwQiC5YWT/UG60S6mDLdsV3wcXFq+BaeJeO9TCST4WNsT2l8un0Gs1Cm2p7e9kRxk9XFDpoathV89ecfHUIQvDDpz3OSAWhWmnItQ7tu98E2YBZn6agZPMva55j8x8GPUyjzT874JhpwgKcCFetqoycNJyc85m/Yk0MzCtoOK7igvrnLXQWuz01p7nQ3IZnDttDM0yNpoI7HVCnLWF3iJB2OnUc9mZur5wpagTDrdxXAeawMUG5nK6krzoM0MkqRBE6xFsAOyrQESlQxPnNHisi7dV7bRlblGQn2Ir5kddLSfKBTtSD7efWVkuqV2hKX1/LsSunDoTw+7bcnxNliRvKZO++Dw9n4wAFusiC+7QlTFl2WddPemW8T9GflNYoIzgP8a351PHbjjt0A+5DYpV4tcaC6e5id3SiXKmBc6LTp99x4rbBz/puDh0BZdHjcv6Gr3khvGESPIUFn/t1s= vlad@Mac-mini-Admin.local"
+  }
+}
+
+resource "yandex_vpc_network" "network-1" {
+  name = "network1"
+}
+
+resource "yandex_vpc_subnet" "subnet-1" {
+  name           = "subnet1"
+  zone           = "<зона_доступности>"
+  v4_cidr_blocks = ["192.168.10.0/24"]
+  network_id     = yandex_vpc_network.network-1.id
+}
