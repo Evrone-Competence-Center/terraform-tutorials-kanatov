@@ -39,6 +39,10 @@ resource "yandex_compute_instance" "vm-1" {
   zone        = "ru-central1-a"
   allow_stopping_for_update = true
 
+  scheduling_policy {
+    preemptible = true
+  }
+
   resources {
     cores  = var.vms_cores
     memory = var.vms_mem
