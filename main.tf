@@ -25,7 +25,7 @@ resource "yandex_storage_bucket" "s3bucket-1" {
 }
 
 
-resource "yandex_compute_disk" "boot-disk" {
+resource "yandex_compute_disk" "boot_disk" {
   name     = "main-disk"
   type     = "network-ssd"
   zone     = "ru-central1-a"
@@ -48,7 +48,7 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   network_interface {
-    subnet_id = "${yandex_vpc_subnet.subnet-1.id}"
+    subnet_id = yandex_vpc_subnet.subnet-1.id
     nat       = true
   }
 
@@ -65,5 +65,5 @@ resource "yandex_vpc_subnet" "subnet-1" {
   name           = "subnet1"
   zone           = "<зона_доступности>"
   v4_cidr_blocks = ["192.168.10.0/24"]
-  network_id     = "${yandex_vpc_network.network-1.id}"
+  network_id     = yandex_vpc_network.network-1.id
 }
