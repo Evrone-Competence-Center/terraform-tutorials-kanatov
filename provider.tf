@@ -29,8 +29,15 @@ provider "yandex" {
   token = var.yc_token
 
 }
-# provider "flux" {
-#   kubernetes = {
-#     config_path = "~/.kube/config"
-#   }
-# }
+provider "flux" {
+  kubernetes = {
+    config_path = "~/.kube/config"
+  }
+  git = {
+    url = "https://github.com/lon8/notickets"
+    branch = main
+    ssh = {
+      
+    }
+  }
+}

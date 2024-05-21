@@ -29,6 +29,11 @@ variable "vms_cores" {
   default = 2
 }
 
+variable "node_mem" {
+  type    = number
+  default = 4
+}
+
 variable "vms_image_id" {
   type    = string
   default = "fd8ejsdle3sqfpsgmqeh"
@@ -42,4 +47,9 @@ variable "k8s_subnet_id" {
 variable "k8s_network_id" {
   type    = string
   default = "enp67snt19k19j1971ls"
+}
+
+variable "cluster_version" {
+  type    = string
+  default = "1.29"
 }

@@ -4,6 +4,8 @@ module "kube" {
   source     = "github.com/terraform-yc-modules/terraform-yc-kubernetes"
   network_id = "enp67snt19k19j1971ls"
 
+  cluster_version = var.cluster_version
+
   master_locations = [
     {
       zone      = "ru-central1-a"
@@ -21,6 +23,7 @@ module "kube" {
 
   node_groups = {
     "yc-k8s-ng-01" = {
+      version     = var.cluster_version
       description = "Kubernetes nodes for system"
       fixed_scale = {
         size = 2
@@ -28,13 +31,14 @@ module "kube" {
       preemptible = true
 
       node_cores  = var.vms_cores
-      node_memory = 4
+      node_memory = var.node_mem
       node_labels = {
         role        = "worker-01"
         environment = "system"
       }
     },
     "yc-k8s-ng-02" = {
+      version     = var.cluster_version
       description = "Kubernetes nodes for service"
       auto_scale = {
         min     = 1
@@ -44,7 +48,7 @@ module "kube" {
       preemptible = true
 
       node_cores  = var.vms_cores
-      node_memory = 4
+      node_memory = var.node_mem
       node_labels = {
         role        = "worker-02"
         environment = "service"
