@@ -2,12 +2,12 @@
 
 module "kube" {
   source     = "github.com/terraform-yc-modules/terraform-yc-kubernetes"
-  network_id = var.k8s_network_id
+  network_id = "enp67snt19k19j1971ls"
 
   master_locations = [
     {
       zone      = "ru-central1-a"
-      subnet_id = var.k8s_subnet_id
+      subnet_id = "e9bmbem7id9rfbvqddrs"
     }
   ]
 
@@ -21,37 +21,37 @@ module "kube" {
 
   node_groups = {
     "yc-k8s-ng-01" = {
-      description = "Kubernetes system node"
+      description = "Kubernetes nodes for system"
+      fixed_scale = {
+        size = 2
+      }
+      preemptible = true
 
-      platform_id = var.vms_platform_id
-
+      node_cores  = var.vms_cores
+      node_memory = 4
+      node_labels = {
+        role        = "worker-01"
+        environment = "system"
+      }
+    },
+    "yc-k8s-ng-02" = {
+      description = "Kubernetes nodes for service"
       auto_scale = {
         min     = 1
         max     = 3
         initial = 1
       }
-
-      node_labels = {
-        role        = "worker-01"
-        environment = "system"
-      }
-
       preemptible = true
-    }
-    # "yc-k8s-ng-02"  = {
-    #   description   = "Kubernetes nodes group 02"
-    #   auto_scale    = {
-    #     min         = 1
-    #     max         = 3
-    #     initial     = 1
-    #   }
 
-    #   node_labels   = {
-    #     role        = "worker-02"
-    #     environment = "dev"
-    #   }
-    #   max_expansion   = 1
-    #   max_unavailable = 1
-    # }
+      node_cores  = var.vms_cores
+      node_memory = 4
+      node_labels = {
+        role        = "worker-02"
+        environment = "service"
+      }
+      node_taints = [
+        "service=:NoSchedule"
+      ]
+    }
   }
 }

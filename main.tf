@@ -1,4 +1,4 @@
-// Create SA
+# // Create SA
 # resource "yandex_iam_service_account" "sa-2" {
 #   folder_id = var.folder_id
 #   name      = "tf-test-sa-2"
