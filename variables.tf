@@ -33,3 +33,13 @@ variable "vms_image_id" {
   type    = string
   default = "fd8ejsdle3sqfpsgmqeh"
 }
+
+variable "k8s_subnet_id" {
+  type    = string
+  default = "e9bmbem7id9rfbvqddrs"
+}
+
+variable "k8s_network_id" {
+  type    = string
+  default = "enp67snt19k19j1971ls"
+}

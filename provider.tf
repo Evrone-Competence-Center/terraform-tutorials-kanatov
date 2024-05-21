@@ -9,7 +9,7 @@ terraform {
     endpoints = {
       s3 = "https://storage.yandexcloud.net"
     }
-    bucket = "tf-s3bucket-1"
+    bucket = "s3-bucket-1"
     region = "ru-central1"
     key    = "terraform.tfstate"
 
@@ -29,3 +29,8 @@ provider "yandex" {
   token = var.yc_token
 
 }
+# provider "flux" {
+#   kubernetes = {
+#     config_path = "~/.kube/config"
+#   }
+# }
