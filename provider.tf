@@ -34,10 +34,10 @@ provider "flux" {
     config_path = "~/.kube/config"
   }
   git = {
-    url = "https://github.com/lon8/notickets"
+    url    = "git@github.com:lon8/notickets.git"
     branch = main
     ssh = {
-      
+      private_key = var.git_private_key
     }
   }
 }

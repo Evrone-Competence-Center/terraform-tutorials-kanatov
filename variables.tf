@@ -53,3 +53,7 @@ variable "cluster_version" {
   type    = string
   default = "1.29"
 }
+
+variable "git_private_key" {
+  type = string
+}
