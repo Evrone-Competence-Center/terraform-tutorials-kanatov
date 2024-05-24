@@ -30,6 +30,7 @@ module "kube" {
       }
       preemptible = true
 
+      nat         = true
       node_cores  = var.vms_cores
       node_memory = var.node_mem
       node_labels = {
@@ -47,6 +48,7 @@ module "kube" {
       }
       preemptible = true
 
+      nat         = true
       node_cores  = var.vms_cores
       node_memory = var.node_mem
       node_labels = {
@@ -58,4 +60,17 @@ module "kube" {
       ]
     }
   }
+}
+
+# ==========================================
+# Construct KinD cluster
+# ==========================================
+
+# resource "kind_cluster" "this" {
+#   name = "flux-e2e"
+# }
+
+resource "flux_bootstrap_git" "this" {
+  embedded_manifests = true
+  path               = "gitops"
 }

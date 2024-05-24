@@ -51,9 +51,9 @@ variable "k8s_network_id" {
 
 variable "cluster_version" {
   type    = string
-  default = "1.29"
+  default = "1.28"
 }
 
-variable "git_private_key" {
+variable "github_token" {
   type = string
 }

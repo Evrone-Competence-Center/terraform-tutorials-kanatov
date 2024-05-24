@@ -3,6 +3,18 @@ terraform {
     yandex = {
       source = "yandex-cloud/yandex"
     }
+    flux = {
+      source  = "fluxcd/flux"
+      version = ">= 1.2"
+    }
+    github = {
+      source  = "integrations/github"
+      version = ">= 6.1"
+    }
+    kind = {
+      source  = "tehcyx/kind"
+      version = ">= 0.4"
+    }
   }
 
   backend "s3" {
@@ -29,15 +41,28 @@ provider "yandex" {
   token = var.yc_token
 
 }
+
+
 provider "flux" {
   kubernetes = {
-    config_path = "~/.kube/config"
+    config_path            = "~/.kube/config"
+    # host                   = module.kube.endpoint
+    # client_certificate     = base64decode(module.kube.master.client_certificate)
+    # client_key             = base64decode(module.kube.master.client_key)
+    # cluster_ca_certificate = base64decode(module.kube.master.cluster_ca_certificate)
   }
   git = {
-    url    = "git@github.com:lon8/notickets.git"
-    branch = main
-    ssh = {
-      private_key = var.git_private_key
+    url    = "https://github.com/lon8/notickets.git"
+    http = {
+      username = "lon8" # This can be any string when using a personal access token
+      password = var.github_token
     }
   }
 }
+
+provider "github" {
+  owner = lon8
+  token = var.github_token
+}
+
+# provider "kind" {}
