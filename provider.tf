@@ -45,14 +45,14 @@ provider "yandex" {
 
 provider "flux" {
   kubernetes = {
-    config_path            = "~/.kube/config"
+    config_path = "~/.kube/config"
     # host                   = module.kube.endpoint
     # client_certificate     = base64decode(module.kube.master.client_certificate)
     # client_key             = base64decode(module.kube.master.client_key)
     # cluster_ca_certificate = base64decode(module.kube.master.cluster_ca_certificate)
   }
   git = {
-    url    = "https://github.com/lon8/notickets.git"
+    url = "https://github.com/lon8/notickets.git"
     http = {
       username = "lon8" # This can be any string when using a personal access token
       password = var.github_token
