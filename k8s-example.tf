@@ -58,6 +58,25 @@ module "kube" {
       node_taints = [
         "service=:NoSchedule"
       ]
+    },
+    "yc-k8s-ng-03" = {
+      version     = var.cluster_version
+      description = "Kubernetes nodes for applications"
+      fixed_scale = {
+        size = 1
+      }
+      preemptible = true
+
+      nat         = true
+      node_cores  = var.vms_cores
+      node_memory = var.node_mem
+      node_labels = {
+        role        = "worker-02"
+        environment = "app"
+      }
+      node_taints = [
+        "app=:NoSchedule"
+      ]
     }
   }
 }
